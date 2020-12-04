@@ -11,3 +11,15 @@ public static string CountryId {
     // NOTE. About Partitions
     // https://azure.microsoft.com/en-us/resources/videos/azure-documentdb-elastic-scale-partitioning/
 }
+
+
+public static string GetPartitionValue(T item, string partitionKey)
+{
+    if (partitionKey != "/PartitionKey") {
+        return item.GetType().GetProperty(partitionKey).GetValue(item, null).ToString();
+    }
+    else {
+        // server country two letters
+        return CountryId;
+    }
+}

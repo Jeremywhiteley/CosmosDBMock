@@ -20,6 +20,9 @@ namespace Library.Shared
         // nice for primary key
         [JsonPropertyName("country_id")]
         public int CountryId { get; set; }
+        [JsonIgnore]
+        // ** PartitionKey: automated setting the server country 
+        public string ServiceCountry { get; set; }
 
         public override string ToString()
         {

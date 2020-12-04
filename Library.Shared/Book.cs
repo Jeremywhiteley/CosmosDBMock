@@ -23,6 +23,9 @@ namespace Library.Shared
         public int Year { get; set; }
         [JsonPropertyName("pages")]
         public int Pages { get; set; }
+        [JsonIgnore]
+        // ** PartitionKey: automated setting the server country 
+        public string ServiceCountry { get; set; }
 
         public override string ToString() => $"{Title}, {Author}";
     }
