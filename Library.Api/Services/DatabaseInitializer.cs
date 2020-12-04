@@ -25,32 +25,40 @@ namespace LibraryApi.Services
             var client = new CosmosClient(settings.EndPoint, settings.Key);
 
             var database = await client.CreateDatabaseIfNotExistsAsync(databaseId);
-            await database.Database.CreateContainerIfNotExistsAsync(containerId, partitionKey);
+            var container = await database.Database.CreateContainerIfNotExistsAsync(containerId, partitionKey);
 
-            //await SeedData<T>(client, databaseId, containerId);
-            
-            //! writing
+            // SEED
+            await SeedData<T>(container);
+
+            // OBJECT FOR DI
             var cosmosDbService = new CosmosService<T>(client, databaseId, containerId, partitionKey);
 
             return cosmosDbService;
         }
 
-        private static async Task SeedData<T>(CosmosClient cosmosClient, string databaseId, string containerId)
+        private static async Task SeedData<T>(Container container)
         {
             try {
-                var container = cosmosClient.GetContainer(databaseId, containerId);
+                var count = 0;
+                var queryDefinition = new QueryDefinition("SELECT VALUE COUNT(1) FROM c");
+                var queryResultSetIterator = container.GetItemQueryIterator<int>(queryDefinition);
 
-                var query = container.GetItemQueryIterator<dynamic>(new QueryDefinition("SELECT COUNT(1) FROM c"));
-                var response = await query.ReadNextAsync();
+                while (queryResultSetIterator.HasMoreResults) {
+                    var currentResultSet = await queryResultSetIterator.ReadNextAsync();
+                    foreach (var i in currentResultSet) {
+                        count = i;
+                    }
+                }
+                Trace.WriteLine($"Count of {typeof(T).Name}: {count}");
 
-                //? ?
-                //var z = response.Resource;
+                if (count == 0) {
+                    // search a resorce for insert data
+
+                }
             }
-            catch(Exception e) {
-                Trace.WriteLine(e.Message);
+            catch (Exception e) {
+                Trace.WriteLine($"** Exception: {e.Message}");
             }
-           
-            
         }
     }
 }
