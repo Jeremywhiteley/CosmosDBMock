@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace LibraryApi.Services
 {
-    public interface ICosmosDbService<T>
+    public interface ICosmosService<T>
     {
         Task<IEnumerable<T>> GetItemsAsync(string query);
         Task<T> GetItemAsync(string id);

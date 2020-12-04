@@ -1,23 +1,26 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Azure.Cosmos;
 
 namespace LibraryApi.Services
 {
-    public class CosmosDbService<T> : ICosmosDbService<T>
+    public class CosmosService<T> : ICosmosService<T>
     {
         readonly Container _container;
+        readonly string _partitionKey;
 
-        public CosmosDbService(CosmosClient cosmosClient, string databaseName, string containerName)
+        public CosmosService(CosmosClient cosmosClient, string databaseName, string containerName, string partitionKey)
         {
             _container = cosmosClient.GetContainer(databaseName, containerName);
+            _partitionKey = partitionKey;
         }
 
         public async Task<bool> AddItemAsync(T item)
         {
             try {
-                var response = await _container.CreateItemAsync<T>(item, new PartitionKey("/Id"));
+                var response = await _container.CreateItemAsync<T>(item, new PartitionKey(GetValueOf(item, _partitionKey)));
                 return true;
             }
             catch {
@@ -64,12 +67,17 @@ namespace LibraryApi.Services
         public async Task<bool> UpdateItemAsync(string id, T item)
         {
             try {
-                await _container.UpsertItemAsync<T>(item, new PartitionKey(id));
+                await _container.UpsertItemAsync(item, new PartitionKey(id));
                 return true;
             }
             catch {
             }
             return false;
+        }
+
+        private static string GetValueOf(T item, string partitionKey)
+        {
+            return item.GetType().GetProperty(partitionKey).GetValue(item, null).ToString();
         }
     }
 }

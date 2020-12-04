@@ -30,8 +30,8 @@ namespace LibraryApi
             // emulator or Azure account (CosmosDbCloud)
             var cosmosDBSettings = Configuration.GetSection("CosmosDbEmulator").Get<CosmosDBSettings>();
             // cosmos db services
-            services.AddSingleton<ICosmosDbService<Book>>(DatabaseInitializer.Initialize<Book>(cosmosDBSettings).GetAwaiter().GetResult());
-            services.AddSingleton<ICosmosDbService<Student>>(DatabaseInitializer.Initialize<Student>(cosmosDBSettings).GetAwaiter().GetResult());
+            services.AddSingleton<ICosmosService<Book>>(DatabaseInitializer.Initialize<Book>(cosmosDBSettings).GetAwaiter().GetResult());
+            services.AddSingleton<ICosmosService<Student>>(DatabaseInitializer.Initialize<Student>(cosmosDBSettings).GetAwaiter().GetResult());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

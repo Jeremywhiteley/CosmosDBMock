@@ -1,9 +1,7 @@
 ﻿using Library.Shared;
 using LibraryApi.Services;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -14,9 +12,9 @@ namespace Library.Api.Controllers
     [ApiController]
     public class Books : ControllerBase
     {
-        readonly ICosmosDbService<Book> _service;
+        readonly ICosmosService<Book> _service;
 
-        public Books(ICosmosDbService<Book> cosmosDbService)
+        public Books(ICosmosService<Book> cosmosDbService)
         {
             _service = cosmosDbService;
         }
