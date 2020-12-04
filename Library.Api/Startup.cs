@@ -1,3 +1,7 @@
+// ******************************
+// Axis Project
+// @__harveyt__
+// ******************************
 using LibraryApi.Services;
 using Library.Shared;
 using Microsoft.AspNetCore.Builder;
@@ -11,12 +15,14 @@ namespace LibraryApi
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
+
+        public static string PATH { get; private set; }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
-
-        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -52,6 +58,9 @@ namespace LibraryApi
             app.UseEndpoints(endpoints => {
                 endpoints.MapControllers();
             });
+
+            // application pah
+            PATH = env.ContentRootPath;
         }
     }
 }

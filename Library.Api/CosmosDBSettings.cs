@@ -1,4 +1,8 @@
-﻿namespace LibraryApi
+﻿// ******************************
+// Axis Project
+// @__harveyt__
+// ******************************
+namespace LibraryApi
 {
     public class CosmosDBSettings
     {

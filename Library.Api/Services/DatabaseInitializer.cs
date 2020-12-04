@@ -4,7 +4,10 @@
 // ******************************
 using Microsoft.Azure.Cosmos;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace LibraryApi.Services
@@ -49,15 +52,28 @@ namespace LibraryApi.Services
                         count = i;
                     }
                 }
-                Trace.WriteLine($"Count of {typeof(T).Name}: {count}");
+                Trace.WriteLine($"** Count of {typeof(T).Name}: {count}");
 
                 if (count == 0) {
-                    // search a resorce for insert data
-
+                    await InsertResource<T>(container);
                 }
             }
             catch (Exception e) {
                 Trace.WriteLine($"** Exception: {e.Message}");
+            }
+        }
+
+        private static async Task InsertResource<T>(Container container)
+        {
+            var file= $"{Startup.PATH}/Data/{typeof(T).Name}_SEED.json";
+            if (File.Exists(file)) {
+                var data = JsonSerializer.Deserialize<List<T>>(File.ReadAllText(file));
+
+                foreach(T item in data) {
+                    await container.CreateItemAsync<T>(item, new PartitionKey(CosmosService<T>.CountryId));
+                    //
+                    Trace.WriteLine($"** Inserted: {item}");
+                }
             }
         }
     }

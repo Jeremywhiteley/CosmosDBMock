@@ -1,4 +1,7 @@
-﻿using System;
+﻿// ******************************
+// Axis Project
+// @__harveyt__
+// ******************************
 using System.Text.Json.Serialization;
 
 namespace Library.Shared
