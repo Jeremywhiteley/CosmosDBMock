@@ -17,6 +17,9 @@ namespace Library.Shared
         public string Gender { get; set; }
         [JsonPropertyName("birthday")]
         public DateTime Birthdate { get; set; }
+        // nice for primary key
+        [JsonPropertyName("country_id")]
+        public int CountryId { get; set; }
 
         public override string ToString()
         {

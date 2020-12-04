@@ -1,0 +1,13 @@
+
+// CountryId
+static string _country;
+public static string CountryId {
+    get {
+        if (_country == null) {
+            _country = new RegionInfo(CultureInfo.CurrentCulture.LCID).Name;
+        }
+        return _country;
+    }
+    // NOTE. About Partitions
+    // https://azure.microsoft.com/en-us/resources/videos/azure-documentdb-elastic-scale-partitioning/
+}
