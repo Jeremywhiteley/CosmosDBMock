@@ -59,9 +59,6 @@ namespace LibraryApi.Services
                 ItemResponse<T> response = await _container.ReadItemAsync<T>(id, new PartitionKey(CountryId));
                 return response.Resource;
             }
-            catch (CosmosException exception) when (exception.StatusCode == System.Net.HttpStatusCode.NotFound) {
-                Trace.WriteLine($"** Exception: {exception.Message}");
-            }
             catch (Exception exception) {
                 Trace.WriteLine($"** Exception: {exception.Message}");
             }
@@ -87,7 +84,7 @@ namespace LibraryApi.Services
         public async Task<bool> UpdateItemAsync(string id, T item)
         {
             try {
-                await _container.UpsertItemAsync(item, new PartitionKey(CountryId));
+                await _container.ReplaceItemAsync(item, id, new PartitionKey(CountryId));
                 return true;
             }
             catch (Exception exception) {
