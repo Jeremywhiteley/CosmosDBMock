@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace LibraryApi.Services
@@ -71,7 +70,7 @@ namespace LibraryApi.Services
                             Utils.SetValue<T>(item, pkName, pkValue);
                             await container.CreateItemAsync(item, pk);
                             //
-                            Trace.WriteLine($"Created {item}");
+                            Trace.WriteLine($"** Created: {item}");
                         }
                     }
                 }

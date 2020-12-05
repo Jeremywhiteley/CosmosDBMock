@@ -21,7 +21,7 @@ namespace LibraryApi.Services
         public CosmosService(CosmosClient cosmosClient, string databaseName, string containerName, string partitionKey)
         {
             _container = cosmosClient.GetContainer(databaseName, containerName);
-            _partitionKey = partitionKey;
+            _partitionKey = partitionKey[1..]; // removes the slash
         }
 
         public async Task<bool> AddItemAsync(T item)
