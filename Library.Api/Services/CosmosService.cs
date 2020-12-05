@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using Library.Shared;
 using Microsoft.Azure.Cosmos;
 
 namespace LibraryApi.Services
@@ -27,8 +28,8 @@ namespace LibraryApi.Services
         {
             try {
                 // Resolves partition key. Uses reflexion due to generic type T
-                if (string.IsNullOrEmpty(GetPartitionValue(item, _partitionKey))) {
-                    SetPartitionValue(item, _partitionKey, CountryId);
+                if (string.IsNullOrEmpty(Utils.GetValue(item, _partitionKey))) {
+                    Utils.SetValue(item, _partitionKey, CountryId);
                 }
                 // post
                 var response = await _container.CreateItemAsync(item, new PartitionKey(CountryId));
@@ -95,17 +96,6 @@ namespace LibraryApi.Services
             return false;
         }
 
-        #region Utils
-        public static string GetPartitionValue(T item, string partitionKey)
-        {
-            return item.GetType().GetProperty(partitionKey).GetValue(item, null).ToString();
-        }
-
-        public static void SetPartitionValue(T item, string partitionName, string value)
-        {
-            item.GetType().GetProperty(partitionName).SetValue(item, value, null);
-        }
-
         // Acts as the main partition
         static string _country;
         public static string CountryId {
@@ -118,6 +108,5 @@ namespace LibraryApi.Services
             // NOTE. About Partitions
             // https://azure.microsoft.com/en-us/resources/videos/azure-documentdb-elastic-scale-partitioning/
         }
-        #endregion
     }
 }
