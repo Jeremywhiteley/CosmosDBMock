@@ -4,7 +4,7 @@
 // ******************************
 using Newtonsoft.Json;
 using System;
-using J = System.Text.Json.Serialization;
+// using J = System.Text.Json.Serialization;
 
 namespace Library.Shared
 {
@@ -29,9 +29,8 @@ namespace Library.Shared
         [JsonProperty("country")]
         public string Country { get; set; }
 
-        [J.JsonIgnore]
         // ** PartitionKey: automated setting the server country 
-        public string ServiceCountry { get; set; }
+        public string Partition { get; set; }
 
         public override string ToString()
         {

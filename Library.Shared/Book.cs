@@ -3,7 +3,7 @@
 // @__harveyt__
 // ******************************
 using Newtonsoft.Json;
-using J = System.Text.Json.Serialization;
+// using J = System.Text.Json.Serialization;
 
 namespace Library.Shared
 {
@@ -34,9 +34,8 @@ namespace Library.Shared
         [JsonProperty("pages")]
         public int Pages { get; set; }
 
-        [J.JsonIgnore]
         // ** PartitionKey: automated setting the server country 
-        public string ServiceCountry { get; set; }
+        public string Partition { get; set; }
 
         public override string ToString() => $"{Title}, {Author}";
     }

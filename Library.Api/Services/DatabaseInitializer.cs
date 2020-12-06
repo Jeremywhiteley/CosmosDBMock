@@ -35,7 +35,7 @@ namespace LibraryApi.Services
             await SeedData<T>(container, settings);
 
             // OBJECT FOR DI
-            var cosmosDbService = new CosmosService<T>(container);
+            var cosmosDbService = new CosmosService<T>(container, settings.PartitionName);
 
             return cosmosDbService;
         }

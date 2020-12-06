@@ -20,28 +20,17 @@ namespace LibraryApi.Services
     {
         readonly Container _container;
         readonly string _partitionName;
-        readonly string _partitionValue;
-        readonly PartitionKey _partitionKey;
 
-        public CosmosService(Container container)
+        public CosmosService(Container container, string partitionName)
         {
             _container = container;
-
-            if (_partitionName == "ServiceCountry") {// the model has to have tris property
-                _partitionValue = COUNTRYID;
-            }
-            _partitionKey = new PartitionKey(_partitionValue);
+            _partitionName = partitionName;
         }
 
         public async Task<bool> AddItemAsync(T item)
         {
             try {
-                // Resolves partition key. Uses reflexion due to uses generic type
-                if (string.IsNullOrEmpty(Utils.GetValue(item, _partitionName))) {
-                    Utils.SetValue(item, _partitionName, _partitionValue);
-                }
-                // post
-                var response = await _container.CreateItemAsync(item, _partitionKey);
+                var response = await _container.CreateItemAsync(item, GetPartitionKey(item));
                 return true;
             }
             catch (Exception exception) {
@@ -50,28 +39,30 @@ namespace LibraryApi.Services
             return false;
         }
 
-        public async Task<bool> DeleteItemAsync(string id)
+        public async Task<T> GetItemAsync(string id, string partition = DEFAULT_PARTITION)
         {
             try {
-                await _container.DeleteItemAsync<T>(id, _partitionKey);
-                return true;
-            }
-            catch (Exception exception) {
-                Trace.WriteLine($"** Exception: {exception.Message}");
-            }
-            return false;
-        }
-
-        public async Task<T> GetItemAsync(string id)
-        {
-            try {
-                ItemResponse<T> response = await _container.ReadItemAsync<T>(id, _partitionKey);
+                // works due to the id is unique
+                ItemResponse<T> response = await _container.ReadItemAsync<T>(id, GetPartitionKey(partition));
                 return response.Resource;
             }
             catch (Exception exception) {
                 Trace.WriteLine($"** Exception: {exception.Message}");
             }
             return default;
+        }
+
+        public async Task<bool> DeleteItemAsync(string id, string partition = DEFAULT_PARTITION)
+        {
+            try {
+                // works due to the id is unique
+                await _container.DeleteItemAsync<T>(id, GetPartitionKey(partition));
+                return true;
+            }
+            catch (Exception exception) {
+                Trace.WriteLine($"** Exception: {exception.Message}");
+            }
+            return false;
         }
 
         public async Task<IEnumerable<T>> GetItemsAsync(string queryString)
@@ -93,7 +84,7 @@ namespace LibraryApi.Services
         public async Task<bool> UpdateItemAsync(string id, T item)
         {
             try {
-                await _container.ReplaceItemAsync(item, id, _partitionKey);
+                await _container.ReplaceItemAsync(item, id, GetPartitionKey(item));
                 return true;
             }
             catch (Exception exception) {
@@ -102,7 +93,25 @@ namespace LibraryApi.Services
             return false;
         }
 
-        // Acts as the main partition
+        private PartitionKey GetPartitionKey(T item)
+        {
+            if (string.IsNullOrEmpty(Utils.GetValue(item, _partitionName))) {
+                // solve with default
+                Utils.SetValue(item, _partitionName, COUNTRYID);
+            }
+            return new PartitionKey(Utils.GetValue(item, _partitionName));
+        }
+
+        private static PartitionKey GetPartitionKey(string value)
+        {
+            if (value == DEFAULT_PARTITION || string.IsNullOrEmpty(value)) {
+                // solve with default
+                value = COUNTRYID;
+            }
+            return new PartitionKey(value);
+        }
+
+        // Acts as the default partition
         static string _country;
         public static string COUNTRYID {
             get {
@@ -114,5 +123,7 @@ namespace LibraryApi.Services
             // NOTE. About Partitions
             // https://azure.microsoft.com/en-us/resources/videos/azure-documentdb-elastic-scale-partitioning/
         }
+
+        const string DEFAULT_PARTITION = "COUNTRYID";
     }
 }

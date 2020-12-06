@@ -28,11 +28,11 @@ namespace Library.Api.Controllers
             return await _service.GetItemsAsync("SELECT * FROM c");
         }
 
-        // GET api/<Books>/5
-        [HttpGet("{id}")]
-        public async Task<Book> Get(string id)
+        // GET api/<Books>/ISBN/Partition
+        [HttpGet("{id}/{partition}")]
+        public async Task<Book> Get(string id, string partition)
         {
-            return await _service.GetItemAsync(id);
+            return await _service.GetItemAsync(id, partition);
         }
 
         // POST api/<Books>
@@ -49,11 +49,12 @@ namespace Library.Api.Controllers
             return await _service.UpdateItemAsync(id, item);
         }
 
-        // DELETE api/<Books>/5
+        // DELETE api/<Books>/ISBN/partition
         [HttpDelete("{id}")]
-        public async Task<bool> Delete(string id)
+        [HttpDelete("{id}/{partition}")]
+        public async Task<bool> Delete(string id, string partition)
         {
-            return await _service.DeleteItemAsync(id);
+            return await _service.DeleteItemAsync(id, partition);
         }
     }
 }

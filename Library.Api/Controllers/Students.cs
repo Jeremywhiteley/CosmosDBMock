@@ -21,18 +21,18 @@ namespace Library.Api.Controllers
             _service = cosmosDbService;
         }
 
-        // GET: api/<Books>
+        // GET: api/<Students>
         [HttpGet]
         public async Task<IEnumerable<Student>> Get()
         {
             return await _service.GetItemsAsync("SELECT * FROM c");
         }
 
-        // GET api/<Books>/5
-        [HttpGet("{id}")]
-        public async Task<Student> Get(string id)
+        // GET api/<Students>/identifier/partition
+        [HttpGet("{id}/{partition}")]
+        public async Task<Student> Get(string id, string partition)
         {
-            return await _service.GetItemAsync(id);
+            return await _service.GetItemAsync(id, partition);
         }
 
         // POST api/<Books>
@@ -42,18 +42,18 @@ namespace Library.Api.Controllers
             return await _service.AddItemAsync(item);
         }
 
-        // PUT api/<Books>/5
+        // PUT api/<Students>/Identifier
         [HttpPut("{id}")]
         public async Task<bool> Put(string id, [FromBody] Student item)
         {
             return await _service.UpdateItemAsync(id, item);
         }
 
-        // DELETE api/<Books>/5
-        [HttpDelete("{id}")]
-        public async Task<bool> Delete(string id)
+        // DELETE api/<Students>/identifier/partition
+        [HttpDelete("{id}/{partition}")]
+        public async Task<bool> Delete(string id, string partition)
         {
-            return await _service.DeleteItemAsync(id);
+            return await _service.DeleteItemAsync(id, partition);
         }
     }
 }
