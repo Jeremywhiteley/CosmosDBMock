@@ -3,7 +3,7 @@
 // @__harveyt__
 // ******************************
 using Newtonsoft.Json;
-using System.Text.Json.Serialization;
+using J = System.Text.Json.Serialization;
 
 namespace Library.Shared
 {
@@ -11,31 +11,30 @@ namespace Library.Shared
     {
         // CosmosDB uses Newtonsoft.Json for serialize, when Api REST uses System.Text.Json
         [JsonProperty("id")]
-        [JsonPropertyName("isbn")]
         public string ISBN { get; set; }
 
-        [JsonPropertyName("author")]
+        [JsonProperty("author")]
         public string Author { get; set; }
 
-        [JsonPropertyName("image_link")]
+        [JsonProperty("image_link")]
         public string ImageLink { get; set; }
 
-        [JsonPropertyName("language")]
+        [JsonProperty("language")]
         public string Language { get; set; }
 
-        [JsonPropertyName("link")]
+        [JsonProperty("link")]
         public string Link { get; set; }
 
-        [JsonPropertyName("title")]
+        [JsonProperty("title")]
         public string Title { get; set; }
 
-        [JsonPropertyName("year")]
+        [JsonProperty("year")]
         public int Year { get; set; }
 
-        [JsonPropertyName("pages")]
+        [JsonProperty("pages")]
         public int Pages { get; set; }
 
-        [System.Text.Json.Serialization.JsonIgnore]
+        [J.JsonIgnore]
         // ** PartitionKey: automated setting the server country 
         public string ServiceCountry { get; set; }
 
