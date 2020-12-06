@@ -32,7 +32,7 @@ namespace LibraryApi
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CosmosLibraryApi", Version = "v1" });
             });
 
-            // ser the Emulator or Azure account data
+            // set the Emulator or Azure account
             var cosmosDBSettings = Configuration.GetSection("CosmosDbEmulator").Get<CosmosDBSettings>();
 
             // cosmos db services
