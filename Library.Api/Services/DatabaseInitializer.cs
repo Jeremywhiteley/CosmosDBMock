@@ -19,9 +19,9 @@ namespace LibraryApi.Services
         /// Creates a Cosmos DB database and a container with the specified partition key. 
         /// </summary>
         /// <returns></returns>
-        public static async Task<CosmosService<T>> Initialize<T>(CosmosDBSettings settings, string partitionKey = "/ServiceCountry")
+        public static async Task<CosmosService<T>> Initialize<T>(CosmosDBSettings settings)
         {
-            Trace.WriteLine($"DatabaseInitializer for {typeof(T).Name} key: {partitionKey}");
+            Trace.WriteLine($"DatabaseInitializer for {typeof(T).Name} key: {settings.PartitionName}");
 
             var databaseId = settings.DatabaseId;
             var containerId = typeof(T).Name;
@@ -29,18 +29,18 @@ namespace LibraryApi.Services
             var client = new CosmosClient(settings.EndPoint, settings.Key);
 
             var database = await client.CreateDatabaseIfNotExistsAsync(databaseId);
-            var container = await database.Database.CreateContainerIfNotExistsAsync(containerId, partitionKey);
+            var container = await database.Database.CreateContainerIfNotExistsAsync(containerId, "/" + settings.PartitionName);
 
             // SEED
-            await SeedData<T>(container, partitionKey);
+            await SeedData<T>(container, settings);
 
             // OBJECT FOR DI
-            var cosmosDbService = new CosmosService<T>(client, databaseId, containerId, partitionKey);
+            var cosmosDbService = new CosmosService<T>(container);
 
             return cosmosDbService;
         }
 
-        private static async Task SeedData<T>(Container container, string partitionKey)
+        private static async Task SeedData<T>(Container container, CosmosDBSettings settings)
         {
             try {
                 var count = 0;
@@ -62,8 +62,8 @@ namespace LibraryApi.Services
                         // here, has to use Newtonsoft.Json
                         var data = JsonConvert.DeserializeObject<List<T>>(File.ReadAllText(file));
                         // partitionKey data
-                        var pkValue = CosmosService<T>.CountryId;
-                        var pkName = partitionKey[1..];
+                        var pkValue = CosmosService<T>.COUNTRYID;
+                        var pkName = settings.PartitionName;
                         var pk = new PartitionKey(pkValue);
                         // insert items
                         foreach (T item in data) {

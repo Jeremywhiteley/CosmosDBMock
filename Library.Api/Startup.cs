@@ -24,17 +24,17 @@ namespace LibraryApi
             Configuration = configuration;
         }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllers();
+
             services.AddSwaggerGen(c => {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CosmosLibraryApi", Version = "v1" });
             });
 
-            // emulator or Azure account (CosmosDbCloud)
+            // ser the Emulator or Azure account data
             var cosmosDBSettings = Configuration.GetSection("CosmosDbEmulator").Get<CosmosDBSettings>();
+
             // cosmos db services
             services.AddSingleton<ICosmosService<Book>>(DatabaseInitializer.Initialize<Book>(cosmosDBSettings).GetAwaiter().GetResult());
             services.AddSingleton<ICosmosService<Student>>(DatabaseInitializer.Initialize<Student>(cosmosDBSettings).GetAwaiter().GetResult());
@@ -59,7 +59,7 @@ namespace LibraryApi
                 endpoints.MapControllers();
             });
 
-            // application pah
+            // application pah for static files
             PATH = env.ContentRootPath;
         }
     }

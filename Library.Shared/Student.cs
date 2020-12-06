@@ -10,6 +10,7 @@ namespace Library.Shared
 {
     public class Student
     {
+        // CosmosDB requires id in container 
         [JsonProperty("id")]
         public string Identifier { get; set; }
 

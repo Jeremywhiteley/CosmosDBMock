@@ -13,26 +13,35 @@ using Microsoft.Azure.Cosmos;
 
 namespace LibraryApi.Services
 {
+    /// <summary>
+    /// Generic CosmosDB data handler
+    /// </summary>
     public class CosmosService<T> : ICosmosService<T>
     {
         readonly Container _container;
-        readonly string _partitionKey;
+        readonly string _partitionName;
+        readonly string _partitionValue;
+        readonly PartitionKey _partitionKey;
 
-        public CosmosService(CosmosClient cosmosClient, string databaseName, string containerName, string partitionKey)
+        public CosmosService(Container container)
         {
-            _container = cosmosClient.GetContainer(databaseName, containerName);
-            _partitionKey = partitionKey[1..]; // removes the slash
+            _container = container;
+
+            if (_partitionName == "ServiceCountry") {// the model has to have tris property
+                _partitionValue = COUNTRYID;
+            }
+            _partitionKey = new PartitionKey(_partitionValue);
         }
 
         public async Task<bool> AddItemAsync(T item)
         {
             try {
-                // Resolves partition key. Uses reflexion due to generic type T
-                if (string.IsNullOrEmpty(Utils.GetValue(item, _partitionKey))) {
-                    Utils.SetValue(item, _partitionKey, CountryId);
+                // Resolves partition key. Uses reflexion due to uses generic type
+                if (string.IsNullOrEmpty(Utils.GetValue(item, _partitionName))) {
+                    Utils.SetValue(item, _partitionName, _partitionValue);
                 }
                 // post
-                var response = await _container.CreateItemAsync(item, new PartitionKey(CountryId));
+                var response = await _container.CreateItemAsync(item, _partitionKey);
                 return true;
             }
             catch (Exception exception) {
@@ -44,7 +53,7 @@ namespace LibraryApi.Services
         public async Task<bool> DeleteItemAsync(string id)
         {
             try {
-                await _container.DeleteItemAsync<T>(id, new PartitionKey(CountryId));
+                await _container.DeleteItemAsync<T>(id, _partitionKey);
                 return true;
             }
             catch (Exception exception) {
@@ -56,7 +65,7 @@ namespace LibraryApi.Services
         public async Task<T> GetItemAsync(string id)
         {
             try {
-                ItemResponse<T> response = await _container.ReadItemAsync<T>(id, new PartitionKey(CountryId));
+                ItemResponse<T> response = await _container.ReadItemAsync<T>(id, _partitionKey);
                 return response.Resource;
             }
             catch (Exception exception) {
@@ -84,7 +93,7 @@ namespace LibraryApi.Services
         public async Task<bool> UpdateItemAsync(string id, T item)
         {
             try {
-                await _container.ReplaceItemAsync(item, id, new PartitionKey(CountryId));
+                await _container.ReplaceItemAsync(item, id, _partitionKey);
                 return true;
             }
             catch (Exception exception) {
@@ -95,7 +104,7 @@ namespace LibraryApi.Services
 
         // Acts as the main partition
         static string _country;
-        public static string CountryId {
+        public static string COUNTRYID {
             get {
                 if (_country == null) {
                     _country = new RegionInfo(CultureInfo.CurrentCulture.LCID).Name;

@@ -9,7 +9,7 @@ namespace Library.Shared
 {
     public class Book
     {
-        // CosmosDB uses Newtonsoft.Json for serialize, when Api REST uses System.Text.Json
+        // CosmosDB requires id in container 
         [JsonProperty("id")]
         public string ISBN { get; set; }
 
