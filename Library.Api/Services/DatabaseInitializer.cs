@@ -16,7 +16,7 @@ namespace LibraryApi.Services
     public static class DatabaseInitializer
     {
         /// <summary>
-        /// Creates a Cosmos DB database and a container with the specified partition key. 
+        /// Creates a Cosmos database and a container with the specified partition key. 
         /// </summary>
         /// <returns></returns>
         public static async Task<CosmosService<T>> Initialize<T>(CosmosSettings settings)
