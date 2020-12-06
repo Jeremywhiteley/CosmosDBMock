@@ -39,7 +39,7 @@ namespace LibraryApi.Services
             return false;
         }
 
-        public async Task<T> GetItemAsync(string id, string partition = DEFAULT_PARTITION)
+        public async Task<T> GetItemAsync(string id, string partition)
         {
             try {
                 // works due to the id is unique
@@ -52,7 +52,7 @@ namespace LibraryApi.Services
             return default;
         }
 
-        public async Task<bool> DeleteItemAsync(string id, string partition = DEFAULT_PARTITION)
+        public async Task<bool> DeleteItemAsync(string id, string partition)
         {
             try {
                 // works due to the id is unique
@@ -97,33 +97,18 @@ namespace LibraryApi.Services
         {
             if (string.IsNullOrEmpty(Utils.GetValue(item, _partitionName))) {
                 // solve with default
-                Utils.SetValue(item, _partitionName, COUNTRYID);
+                Utils.SetValue(item, _partitionName, Utils.COUNTRYID);
             }
             return new PartitionKey(Utils.GetValue(item, _partitionName));
         }
 
         private static PartitionKey GetPartitionKey(string value)
         {
-            if (value == DEFAULT_PARTITION || string.IsNullOrEmpty(value)) {
+            if (value == Utils.DEFAULT_PARTITION || string.IsNullOrEmpty(value)) {
                 // solve with default
-                value = COUNTRYID;
+                value = Utils.COUNTRYID;
             }
             return new PartitionKey(value);
         }
-
-        // Acts as the default partition
-        static string _country;
-        public static string COUNTRYID {
-            get {
-                if (_country == null) {
-                    _country = new RegionInfo(CultureInfo.CurrentCulture.LCID).Name;
-                }
-                return _country;
-            }
-            // NOTE. About Partitions
-            // https://azure.microsoft.com/en-us/resources/videos/azure-documentdb-elastic-scale-partitioning/
-        }
-
-        const string DEFAULT_PARTITION = "COUNTRYID";
     }
 }

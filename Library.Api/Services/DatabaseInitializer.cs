@@ -19,7 +19,7 @@ namespace LibraryApi.Services
         /// Creates a Cosmos DB database and a container with the specified partition key. 
         /// </summary>
         /// <returns></returns>
-        public static async Task<CosmosService<T>> Initialize<T>(CosmosDBSettings settings)
+        public static async Task<CosmosService<T>> Initialize<T>(CosmosSettings settings)
         {
             Trace.WriteLine($"DatabaseInitializer for {typeof(T).Name} key: {settings.PartitionName}");
 
@@ -40,7 +40,7 @@ namespace LibraryApi.Services
             return cosmosDbService;
         }
 
-        private static async Task SeedData<T>(Container container, CosmosDBSettings settings)
+        private static async Task SeedData<T>(Container container, CosmosSettings settings)
         {
             try {
                 var count = 0;
@@ -62,7 +62,7 @@ namespace LibraryApi.Services
                         // here, has to use Newtonsoft.Json
                         var data = JsonConvert.DeserializeObject<List<T>>(File.ReadAllText(file));
                         // partitionKey data
-                        var pkValue = CosmosService<T>.COUNTRYID;
+                        var pkValue = Utils.COUNTRYID;
                         var pkName = settings.PartitionName;
                         var pk = new PartitionKey(pkValue);
                         // insert items

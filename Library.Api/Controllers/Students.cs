@@ -30,7 +30,7 @@ namespace Library.Api.Controllers
 
         // GET api/<Students>/identifier/partition
         [HttpGet("{id}/{partition}")]
-        public async Task<Student> Get(string id, string partition)
+        public async Task<Student> Get(string id, string partition = Utils.DEFAULT_PARTITION)
         {
             return await _service.GetItemAsync(id, partition);
         }
@@ -51,7 +51,7 @@ namespace Library.Api.Controllers
 
         // DELETE api/<Students>/identifier/partition
         [HttpDelete("{id}/{partition}")]
-        public async Task<bool> Delete(string id, string partition)
+        public async Task<bool> Delete(string id, string partition = Utils.DEFAULT_PARTITION)
         {
             return await _service.DeleteItemAsync(id, partition);
         }

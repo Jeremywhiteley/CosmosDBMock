@@ -23,14 +23,14 @@ namespace Library.Api.Controllers
 
         // GET: api/<Books>
         [HttpGet]
-        public async Task <IEnumerable<Book>> Get()
+        public async Task<IEnumerable<Book>> Get()
         {
             return await _service.GetItemsAsync("SELECT * FROM c");
         }
 
         // GET api/<Books>/ISBN/Partition
         [HttpGet("{id}/{partition}")]
-        public async Task<Book> Get(string id, string partition)
+        public async Task<Book> Get(string id, string partition = Utils.DEFAULT_PARTITION)
         {
             return await _service.GetItemAsync(id, partition);
         }
@@ -52,7 +52,7 @@ namespace Library.Api.Controllers
         // DELETE api/<Books>/ISBN/partition
         [HttpDelete("{id}")]
         [HttpDelete("{id}/{partition}")]
-        public async Task<bool> Delete(string id, string partition)
+        public async Task<bool> Delete(string id, string partition = Utils.DEFAULT_PARTITION)
         {
             return await _service.DeleteItemAsync(id, partition);
         }

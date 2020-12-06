@@ -19,9 +19,10 @@ namespace LibraryApi
 
         public static string PATH { get; private set; }
 
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
+            PATH = env.ContentRootPath;
         }
 
         public void ConfigureServices(IServiceCollection services)
@@ -33,7 +34,8 @@ namespace LibraryApi
             });
 
             // set the Emulator or Azure account
-            var cosmosDBSettings = Configuration.GetSection("CosmosDbEmulator").Get<CosmosDBSettings>();
+            var cosmosDBSettings = Configuration.GetSection("CosmosDbEmulator").Get<CosmosSettings>();
+
 
             // cosmos db services
             services.AddSingleton<ICosmosService<Book>>(DatabaseInitializer.Initialize<Book>(cosmosDBSettings).GetAwaiter().GetResult());
@@ -58,9 +60,6 @@ namespace LibraryApi
             app.UseEndpoints(endpoints => {
                 endpoints.MapControllers();
             });
-
-            // application pah for static files
-            PATH = env.ContentRootPath;
         }
     }
 }
