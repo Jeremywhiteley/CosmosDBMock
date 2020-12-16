@@ -1,4 +1,4 @@
-﻿# Cosmos DB Sample
+# Cosmos DB Sample
 Cosmos DB es un servicio de base de datos con escalado horizontal y globalmente distribuido, que ejecuta en la nube MS Azure. Presenta potenciales de rendimiento tecnológicamente optimizados.
 
 Decidí escribir un ejemplo que fuera más allá de los ejemplos de MS, en donde encontré que son poco muy simples en el sentido de no implementar precisamente genéricos; lo cual no es sencillo en este caso. Así mismo, quise implementar algo más desatendido del asunto de las particiones. 
@@ -17,34 +17,17 @@ Para quienes usan MongoDB, una aplicación escrita para MongoDB se puede comunic
   - [Emulador](https://docs.microsoft.com/en-us/azure/cosmos-db/local-emulator-release-notes)
 
 ## La aplicación
-■ Consiste en una solución de .NET 5.0, con dos proyectos: Un componente netstandard 2.0, que corre C# 9, Library.Shared, y una aplicación Web Api REST .NET Core 5.0, Library.Api.
+Consiste en una solución de .NET 5.0, con dos proyectos: Un componente netstandard 2.0, que corre C# 9, Library.Shared, y una aplicación Web Api REST .NET Core 5.0, Library.Api.
 
-■ Se trata de un prototipo de Biblioteca con dos modelos de ejemplo, una para libras, Book, y otra para estudiantes, Students.
+Se trata de un prototipo de Biblioteca con dos modelos de ejemplo, una para libras, Book, y otra para estudiantes, Students.
 
-■ El servicio ICosmosService<T> demuestra el núcleo de la implantación con genéricos. Para superar la propiedad Id dentro de los genéricos, se implementó algo de Reflexión.
+El servicio ICosmosService<T> demuestra el núcleo de la implantación con genéricos. Para superar la propiedad Id dentro de los genéricos, se implementó algo de Reflexión.
 
-■ La aplicación crea la base de datos Library, y alimenta dos Contenedores (tablas en términos coloquiales), con una semilla de datos. 
+La aplicación crea la base de datos Library, y alimenta dos Contenedores (tablas en términos coloquiales), con una semilla de datos. 
 
-■ La API muestra la implementación CRUD para ambos modelos,
+La API muestra la implementación CRUD para ambos modelos,
 
-■ Muestra cómo implementar desde Settings los datos de conexión a Cosmos, para Azure y para el Emulador.
+Muestra cómo implementar desde Settings los datos de conexión a Cosmos, para Azure y para el Emulador.
 
+![Emulador](https://github.com/harveytriana/CosmosDBMock/blob/master/cdb_1.png)
 
-
-
-### Tech
-
-Dillinger uses a number of open source projects to work properly:
-
-* [AngularJS] - HTML enhanced for web apps!
-* [Ace Editor] - awesome web-based text editor
-* [markdown-it] - Markdown parser done right. Fast and easy to extend.
-* [Twitter Bootstrap] - great UI boilerplate for modern web apps
-* [node.js] - evented I/O for the backend
-* [Express] - fast node.js network app framework [@tjholowaychuk]
-* [Gulp] - the streaming build system
-* [Breakdance](https://breakdance.github.io/breakdance/) - HTML to Markdown converter
-* [jQuery] - duh
-
-
-**Free Software, Hell Yeah!**
