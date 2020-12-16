@@ -55,7 +55,7 @@ Esta imagen muestra un **GET** en Swagger:
   },
   "CosmosDbCloud": {
     "EndPoint": "",
-    "Key": "<Secret hash>",
+    "Key": "<your secret hash>",
     "DatabaseId": "Library",
     "PartitionName": "Partition"
   }
