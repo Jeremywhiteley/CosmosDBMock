@@ -40,7 +40,7 @@ Esta imagen muestra un **GET** en Swagger:
 
 ### Otros Detalles
 
-Muestra la práctica correcta para implementar los datos de conexión a Cosmos desde Settings, tanto  para Azure como para el Emulador.
+* Muestro una práctica correcta para implementar los datos de conexión a Cosmos desde Settings, tanto  para Azure como para el Emulador.
 
 #### appsettings.json (fragmento)
 ```json
@@ -55,12 +55,14 @@ Muestra la práctica correcta para implementar los datos de conexión a Cosmos d
   },
   "CosmosDbCloud": {
     "EndPoint": "",
-    "Key": "<Secret hash>",
+    "Key": "<your secret hash>",
     "DatabaseId": "Library",
     "PartitionName": "Partition"
   }
 }
 ```
+
+* Muestro una forma eficiente para manejar un archivo estático desde .NET Core, con ruta global. Se usó para la semilla de datos al crear la base de daos de ejemplo.
 ___
 Sigueme en Twitter ```@__harveyt__```
 
