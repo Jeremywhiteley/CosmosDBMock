@@ -9,7 +9,7 @@ Otra ventaja del ejemplo, es que uso en NET 5.0, pasando por varios detalles. Es
 
 Para quienes usan MongoDB, una aplicación escrita para MongoDB se puede comunicar con Cosmos y usar bases de datos de esta. Son tecnologías compatibles en protocolos y comunicación.
 
-[Documentación](https://docs.microsoft.com/es-es/azure/cosmos-db/)
+[Documentación sobre Azure Cosmos DB](https://docs.microsoft.com/es-es/azure/cosmos-db/)
 
 
 ## Requisitos
