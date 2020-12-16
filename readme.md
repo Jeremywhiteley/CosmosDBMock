@@ -64,7 +64,7 @@ Esta imagen muestra un **GET** en Swagger:
 
 * Muestro una forma eficiente para manejar un archivo estático desde .NET Core, con ruta global. Se usó para la semilla de datos al crear la base de daos de ejemplo.
 
-* Se resuelve de manera lógica las complejidades que maneja Cosmos en la clase ** CosmosService<T>** 
+* Se resuelve de manera lógica las complejidades que maneja Cosmos en la clase **CosmosService<T>** 
 ___
 Sigueme en Twitter ```@__harveyt__```
 
