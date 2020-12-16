@@ -53,7 +53,7 @@ Muestra cómo implementar desde Settings los datos de conexión a Cosmos, para A
 }
 ```
 ___
-Sigueme en Twitter @__harveyt__
+Sigueme en Twitter ```@__harveyt__```
 
 
 
