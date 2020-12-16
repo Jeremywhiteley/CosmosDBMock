@@ -30,7 +30,7 @@ Azure Cosmos DB Emulator mostrará lo siguiente:
 
 ![Emulador](https://github.com/harveytriana/CosmosDBMock/blob/master/cdb_1.png)
 
-La API **Library.Api** muestra la implementación CRUD para ambos modelos:
+La API **Library.Api** muestra la implementación CRUD para ambos modelos. Nótese que se agrega **/Partition** en los parámetros de GET y DELETE, siendo un campo opcional. El predeterminado es el país en donde ejecuta el servidor. 
 
 ![Emulador](https://github.com/harveytriana/CosmosDBMock/blob/master/cdb_2.png)
 
