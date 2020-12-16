@@ -1,4 +1,4 @@
-# Cosmos DB Sample
+# Un ejemplo genérico con Cosmos DB
 Cosmos DB es un servicio de base de datos con escalado horizontal y globalmente distribuido, que ejecuta en la nube MS Azure. Presenta potenciales de rendimiento muy optimizados.
 
 Decidí escribir un ejemplo que fuera más allá de los ejemplos de MS, en donde encontré que son simples en el sentido de no implementar precisamente genéricos; lo cual no es sencillo en este caso. Así mismo, quise implementar algo más desatendido del asunto de las particiones. 
