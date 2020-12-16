@@ -1,11 +1,12 @@
 # Cosmos DB Sample
-Cosmos DB es un servicio de base de datos con escalado horizontal y globalmente distribuido, que ejecuta en la nube MS Azure. Presenta potenciales de rendimiento tecnológicamente optimizados.
+Cosmos DB es un servicio de base de datos con escalado horizontal y globalmente distribuido, que ejecuta en la nube MS Azure. Presenta potenciales de rendimiento muy optimizados.
 
-Decidí escribir un ejemplo que fuera más allá de los ejemplos de MS, en donde encontré que son poco muy simples en el sentido de no implementar precisamente genéricos; lo cual no es sencillo en este caso. Así mismo, quise implementar algo más desatendido del asunto de las particiones. 
+Decidí escribir un ejemplo que fuera más allá de los ejemplos de MS, en donde encontré que son simples en el sentido de no implementar precisamente genéricos; lo cual no es sencillo en este caso. Así mismo, quise implementar algo más desatendido del asunto de las particiones. 
 
-Una ventaja descomunal para el desarrollador de este tipo de aplicaciones es que Cosmo ofrece un emulador. Es decir, no tiene que estar depurando en la nube para crear tus prototipos.
+Una ventaja descomunal para el desarrollador de este tipo de aplicaciones es que Cosmos ofrece un emulador. Es decir, no tienes que estar depurando en la nube para crear tus prototipos.
 
-Otra ventaja del ejemplo, es que la cree en NET 5.0, pasando por varios detalles. Es notable que por ejemplo, Cosmo serializa con NewtonSoft, mientras que la API Rest de NET 5.0 usa el moderno MS.JSON. No hay conflicto, los dos pueden vivir en el mismo ecosistema.
+Otra ventaja del ejemplo, es que uso en NET 5.0, pasando por varios detalles. Es notable que por ejemplo, Cosmo serializa con Newtonsoft.Json, mientras que la API Rest de NET 5.0 usa el moderno System.Text.Json. No hay conflicto, los dos pueden convivir en la misma solucion; el ejemplo ilustra eso.
+
 Para quienes usan MongoDB, una aplicación escrita para MongoDB se puede comunicar con Cosmos y usar bases de datos de esta. Son tecnologías compatibles en protocolos y comunicación.
 
 [Documentación](https://docs.microsoft.com/es-es/azure/cosmos-db/)
@@ -19,25 +20,29 @@ Para quienes usan MongoDB, una aplicación escrita para MongoDB se puede comunic
 ## La aplicación
 Consiste en una solución de .NET 5.0, con dos proyectos: Un componente netstandard 2.0, que corre C# 9, Library.Shared, y una aplicación Web Api REST .NET Core 5.0, Library.Api.
 
-Se trata de un prototipo de Biblioteca con dos modelos de ejemplo, una para libros, Book, y otra para estudiantes, Students.
+Se trata de un prototipo de una base de datos de una Biblioteca con dos modelos clasistas de ejemplo, una para libros, **Book**, y otra para estudiantes, **Student**.
 
-El servicio ICosmosService<T> demuestra el núcleo de la implantación con genéricos. Para superar la propiedad Id dentro de los genéricos, se implementó algo de Reflexión.
+El servicio ICosmosService<T> demuestra el núcleo de la implantación con genéricos. Para superar la propiedad **Id** dentro de los genéricos, se implementó algo de Reflexión.
 
-La aplicación crea la base de datos Library, y alimenta dos Contenedores (tablas en términos coloquiales), con una semilla de datos.
+La aplicación crea la base de datos **Library**, y alimenta dos Contenedores (tablas en términos coloquiales), con una semilla de datos.
+
+Azure Cosmos DB Emulator mostrará lo siguiente:
 
 ![Emulador](https://github.com/harveytriana/CosmosDBMock/blob/master/cdb_1.png)
 
-La API muestra la implementación CRUD para ambos modelos.
+La API **Library.Api** muestra la implementación CRUD para ambos modelos:
 
 ![Emulador](https://github.com/harveytriana/CosmosDBMock/blob/master/cdb_2.png)
 
-Probando un GET:
+Esta imagen muestra un **GET** en Swagger:
 
 ![Emulador](https://github.com/harveytriana/CosmosDBMock/blob/master/cdb_3.png)
 
-Muestra cómo implementar desde Settings los datos de conexión a Cosmos, para Azure y para el Emulador.
+### Otros Detalles
 
-#### appsettings.json
+Muestra la práctica correcta para los datos de conexión a Cosmos dese Settings, tanto  para Azurecomo para el Emulador.
+
+#### appsettings.json (fragmento)
 ```json
 {
   "Logging": {
