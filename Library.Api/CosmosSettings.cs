@@ -5,7 +5,7 @@
 namespace LibraryApi
 {
     /// <summary>
-    /// Clound account data
+    /// Cloud account data
     /// </summary>
     public class CosmosSettings
     {

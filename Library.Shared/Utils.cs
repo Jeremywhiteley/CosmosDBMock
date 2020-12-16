@@ -1,4 +1,8 @@
-﻿using System.Globalization;
+﻿// ******************************
+// Axis Project
+// @__harveyt__
+// ******************************
+using System.Globalization;
 
 namespace Library.Shared
 {
