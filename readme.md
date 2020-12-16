@@ -23,13 +23,18 @@ Se trata de un prototipo de Biblioteca con dos modelos de ejemplo, una para libr
 
 El servicio ICosmosService<T> demuestra el núcleo de la implantación con genéricos. Para superar la propiedad Id dentro de los genéricos, se implementó algo de Reflexión.
 
-La aplicación crea la base de datos Library, y alimenta dos Contenedores (tablas en términos coloquiales), con una semilla de datos. 
+La aplicación crea la base de datos Library, y alimenta dos Contenedores (tablas en términos coloquiales), con una semilla de datos.
+
 ![Emulador](https://github.com/harveytriana/CosmosDBMock/blob/master/cdb_1.png)
 
-La API muestra la implementación CRUD para ambos modelos,
+La API muestra la implementación CRUD para ambos modelos.
+
 ![Emulador](https://github.com/harveytriana/CosmosDBMock/blob/master/cdb_2.png)
+
 Probando un GET:
+
 ![Emulador](https://github.com/harveytriana/CosmosDBMock/blob/master/cdb_3.png)
+
 Muestra cómo implementar desde Settings los datos de conexión a Cosmos, para Azure y para el Emulador.
 
 #### appsettings.json
