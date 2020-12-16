@@ -40,7 +40,7 @@ Esta imagen muestra un **GET** en Swagger:
 
 ### Otros Detalles
 
-Muestra la práctica correcta para los datos de conexión a Cosmos dese Settings, tanto  para Azurecomo para el Emulador.
+Muestra la práctica correcta para implementar los datos de conexión a Cosmos desde Settings, tanto  para Azure como para el Emulador.
 
 #### appsettings.json (fragmento)
 ```json
