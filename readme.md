@@ -36,7 +36,6 @@ Muestra cómo implementar desde Settings los datos de conexión a Cosmos, para A
 ```json
 {
   "Logging": {
-...
   },
   "CosmosDbEmulator": {
     "EndPoint": "https://localhost:8081",
@@ -46,7 +45,7 @@ Muestra cómo implementar desde Settings los datos de conexión a Cosmos, para A
   },
   "CosmosDbCloud": {
     "EndPoint": "",
-    //"Key": "<Secret hash>",
+    "Key": "<Secret hash>",
     "DatabaseId": "Library",
     "PartitionName": "Partition"
   }
