@@ -19,15 +19,43 @@ Para quienes usan MongoDB, una aplicación escrita para MongoDB se puede comunic
 ## La aplicación
 Consiste en una solución de .NET 5.0, con dos proyectos: Un componente netstandard 2.0, que corre C# 9, Library.Shared, y una aplicación Web Api REST .NET Core 5.0, Library.Api.
 
-Se trata de un prototipo de Biblioteca con dos modelos de ejemplo, una para libras, Book, y otra para estudiantes, Students.
+Se trata de un prototipo de Biblioteca con dos modelos de ejemplo, una para libros, Book, y otra para estudiantes, Students.
 
 El servicio ICosmosService<T> demuestra el núcleo de la implantación con genéricos. Para superar la propiedad Id dentro de los genéricos, se implementó algo de Reflexión.
 
 La aplicación crea la base de datos Library, y alimenta dos Contenedores (tablas en términos coloquiales), con una semilla de datos. 
+![Emulador](https://github.com/harveytriana/CosmosDBMock/blob/master/cdb_1.png)
 
 La API muestra la implementación CRUD para ambos modelos,
-
+![Emulador](https://github.com/harveytriana/CosmosDBMock/blob/master/cdb_2.png)
+Probando un GET:
+![Emulador](https://github.com/harveytriana/CosmosDBMock/blob/master/cdb_3.png)
 Muestra cómo implementar desde Settings los datos de conexión a Cosmos, para Azure y para el Emulador.
 
-![Emulador](https://github.com/harveytriana/CosmosDBMock/blob/master/cdb_1.png)
+#### appsettings.json
+```json
+{
+  "Logging": {
+...
+  },
+  "CosmosDbEmulator": {
+    "EndPoint": "https://localhost:8081",
+    "Key": "C2y6yDjf5/R+ob0N...aGQy67XIw/Jw==",
+    "DatabaseId": "Library",
+    "PartitionName": "Partition"
+  },
+  "CosmosDbCloud": {
+    "EndPoint": "",
+    //"Key": "<Secret hash>",
+    "DatabaseId": "Library",
+    "PartitionName": "Partition"
+  }
+}
+```
+___
+Sigueme en Twitter @__harveyt__
+
+
+
+
 
