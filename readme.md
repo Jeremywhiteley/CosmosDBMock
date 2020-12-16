@@ -34,7 +34,7 @@ La API **Library.Api** muestra la implementación CRUD para ambos modelos. Nóte
 
 ![Emulador](https://github.com/harveytriana/CosmosDBMock/blob/master/cdb_2.png)
 
-> Acerca de las Particiones, una exposicion detallada: [Azure DocumentDB Elastic Scale - Partitioning](https://azure.microsoft.com/en-us/resources/videos/azure-documentdb-elastic-scale-partitioning/) (Sugerencia. Aunque ejemplos lo muestran, quizás por simplicidad, no use Id como partición)
+> Acerca de las Particiones, una exposicion detallada: [Azure DocumentDB Elastic Scale - Partitioning](https://azure.microsoft.com/en-us/resources/videos/azure-documentdb-elastic-scale-partitioning/) (Sugerencia. Aunque ejemplos lo muestran, quizás por simplicidad, no use el Id del documento como partición)
 
 Esta imagen muestra un **GET** en Swagger:
 
