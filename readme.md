@@ -18,7 +18,7 @@ Para quienes usan MongoDB, una aplicación escrita para MongoDB se puede comunic
   - [Emulador](https://docs.microsoft.com/en-us/azure/cosmos-db/local-emulator-release-notes)
 
 ## La aplicación
-Consiste en una solución de .NET 5.0, con dos proyectos: Un componente netstandard 2.0, que corre C# 9, Library.Shared, y una aplicación Web Api REST .NET Core 5.0, Library.Api.
+Consiste en una solución de .NET 5.0, con dos proyectos: Un componente netstandard 2.0, que corre C# 9, **Library.Shared**, y una aplicación Web Api REST .NET Core 5.0, **Library.Api**.
 
 Se trata de un prototipo de una base de datos de una Biblioteca con dos modelos clasistas de ejemplo, una para libros, **Book**, y otra para estudiantes, **Student**.
 
