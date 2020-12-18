@@ -5,7 +5,7 @@ Decidí escribir un ejemplo que fuera más allá de los ejemplos de MS, en donde
 
 Una ventaja descomunal para el desarrollador de este tipo de aplicaciones es que Cosmos ofrece un emulador. Es decir, no tienes que estar depurando en la nube para crear tus prototipos.
 
-Otra ventaja del ejemplo, es que uso en NET 5.0, pasando por varios detalles. Es notable que por ejemplo, Cosmo serializa con Newtonsoft.Json, mientras que la API Rest de NET 5.0 usa el moderno System.Text.Json. No hay conflicto, los dos pueden convivir en la misma solucion; el ejemplo ilustra eso. Por cierto, MongoDb también necesitaría Newtonsoft.Json para trabajar con C#.
+Otra ventaja del ejemplo, es que uso en NET 5.0, pasando por varios detalles. Es notable que por ejemplo, Cosmo serializa con Newtonsoft.Json, mientras que la API Rest de NET 5.0 usa el moderno System.Text.Json. No hay conflicto, los dos pueden convivir en la misma solucion; el ejemplo ilustra eso. Por cierto, Mongo también necesitaría Newtonsoft.Json para trabajar con C#.
 
 Para quienes usan MongoDB, una aplicación escrita para MongoDB se puede comunicar con Cosmos y usar bases de datos de esta. Son tecnologías compatibles en protocolos y comunicación.
 
