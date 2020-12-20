@@ -68,7 +68,7 @@ Esta imagen muestra un **GET** en Swagger:
 
 * Se resuelve de manera lógica las complejidades que maneja Cosmos en la clase **CosmosService<T>** 
 ___
-Sigueme en Twitter ```@__harveyt__```
+Luis Harvey Triana Vega
 
 
 
