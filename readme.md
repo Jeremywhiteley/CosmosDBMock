@@ -1,4 +1,5 @@
 # Cosmos DB Generic Sample, NET 5.0
+_An API Rest from .NET Core_
 Cosmos DB is a globally distributed, scale-out database service running on the MS Azure cloud. It presents highly optimized performance potentials.
 
 I decided to write an example that went beyond the MS examples, where I found that they are simple in the sense of not implementing exactly generic; which is not easy in this case. Also, I wanted to implement something more neglectful of the Partitions.
