@@ -1,50 +1,51 @@
-# Un ejemplo genérico con Cosmos DB
-Cosmos DB es un servicio de base de datos con escalado horizontal y globalmente distribuido, que ejecuta en la nube MS Azure. Presenta potenciales de rendimiento muy optimizados.
+# A generic example with Cosmos DB, NET 5.0
+Cosmos DB is a globally distributed, scale-out database service running on the MS Azure cloud. It presents highly optimized performance potentials.
 
-Decidí escribir un ejemplo que fuera más allá de los ejemplos de MS, en donde encontré que son simples en el sentido de no implementar precisamente genéricos; lo cual no es sencillo en este caso. Así mismo, quise implementar algo más desatendido del asunto de las particiones. 
+I decided to write an example that went beyond the MS examples, where I found that they are simple in the sense of not implementing exactly generic; which is not easy in this case. Also, I wanted to implement something more neglectful of the Partitions.
 
-Una ventaja descomunal para el desarrollador de este tipo de aplicaciones es que Cosmos ofrece un emulador. Es decir, no tienes que estar depurando en la nube para crear tus prototipos.
+A huge advantage for the developer of this type of application is that Cosmos DB offers an emulator. That is, you don't have to be debugging in the cloud to create your prototypes.
 
-Otra ventaja del ejemplo, es que uso en NET 5.0, pasando por varios detalles. Es notable que por ejemplo, Cosmo serializa con Newtonsoft.Json, mientras que la API Rest de NET 5.0 usa el moderno System.Text.Json. No hay conflicto, los dos pueden convivir en la misma solucion; el ejemplo ilustra eso. Por cierto, Mongo también necesitaría Newtonsoft.Json para trabajar con C#.
+For this example, I use NET 5.0, going through various details. It is notable that for example Cosmo serializes with Newtonsoft.Json, while the NET 5.0 Rest API uses the modern System.Text.Json. There is no conflict, the two can coexist in the same solution; the example illustrates that.
 
-Para quienes usan MongoDB, una aplicación escrita para MongoDB se puede comunicar con Cosmos y usar bases de datos de esta. Son tecnologías compatibles en protocolos y comunicación.
+For those who use MongoDB, an application written for MongoDB can communicate with Cosmos and use databases from it. They are compatible technologies in protocols and communication.
 
-[Documentación sobre Azure Cosmos DB](https://docs.microsoft.com/es-es/azure/cosmos-db/)
+[Azure Cosmos DB documentation](https://docs.microsoft.com/en-us/azure/cosmos-db/)
 
 
-## Requisitos
+## Requirements
 
-  - Visual Studio 2019 16.8.x con NET 5.0
-  - [Emulador](https://docs.microsoft.com/en-us/azure/cosmos-db/local-emulator-release-notes)
+  - Visual Studio 2019 16.8.x with NET 5.0
+  - [Cosmos DB Emulator](https://docs.microsoft.com/en-us/azure/cosmos-db/local-emulator-release-notes)
 
-## La aplicación
-Consiste en una solución de .NET 5.0, con dos proyectos: Un componente netstandard 2.0, que corre C# 9, **Library.Shared**, y una aplicación Web Api REST .NET Core 5.0, **Library.Api**.
+## The Application Sample
+It consists of a .NET 5.0 solution, with two projects: A netstandard 2.0 component, which runs C # 9, Library.Shared, and a Web Api REST .NET Core 5.0 application, Library.Api.
 
-Se trata de un prototipo de una base de datos de una Biblioteca con dos modelos clasistas de ejemplo, una para libros, **Book**, y otra para estudiantes, **Student**.
+It is a prototype of a Library database with two example class models, one for books, Book, and the other for students, Student.
 
-El servicio ICosmosService<T> demuestra el núcleo de la implantación con genéricos. Para superar la propiedad **Id** dentro de los genéricos, se implementó algo de Reflexión.
+The ICosmosService <T> service demonstrates the core of the generic implementation. To overcome the Id property within the generics, some Reflection was implemented.
 
-La aplicación crea la base de datos **Library**, y alimenta dos Contenedores (tablas en términos coloquiales), con una semilla de datos.
+The application creates the «Library» (Where are we going to consult books) database, and feeds two Containers (tables in colloquial terms), with a data seed.
 
-Azure Cosmos DB Emulator mostrará lo siguiente:
+Azure Cosmos DB Emulator will show the following:
 
 ![Emulador](https://github.com/harveytriana/CosmosDBMock/blob/master/cdb_1.png)
 
-La API **Library.Api** muestra la implementación CRUD para ambos modelos. Nótese que se agrega **/Partition** en los parámetros de GET y DELETE, siendo un campo opcional. El predeterminado es el país en donde ejecuta el servidor. 
+The API Library.Api shows the CRUD implementation for both models. Note that / Partition is added in the GET and DELETE parameters, being an optional field. The default is the country where the server is running.
 
-![Emulador](https://github.com/harveytriana/CosmosDBMock/blob/master/cdb_2.png)
+![Emulator](https://github.com/harveytriana/CosmosDBMock/blob/master/cdb_2.png)
 
-> Acerca de las Particiones, una exposicion detallada: [Azure DocumentDB Elastic Scale - Partitioning](https://azure.microsoft.com/en-us/resources/videos/azure-documentdb-elastic-scale-partitioning/) (Sugerencia. Aunque ejemplos lo muestran, quizás por simplicidad, no use el Id del documento como partición)
+> About Partitions, a detailed exposition: Azure DocumentDB Elastic Scale - Partitioning (Hint. Although examples show it, perhaps for simplicity, do not use the ID of the document as a partition)
+: [Azure DocumentDB Elastic Scale - Partitioning](https://azure.microsoft.com/en-us/resources/videos/azure-documentdb-elastic-scale-partitioning/)
 
-Esta imagen muestra un **GET** en Swagger:
+This image shows a GET in Swagger:
 
-![Emulador](https://github.com/harveytriana/CosmosDBMock/blob/master/cdb_3.png)
+![Emulator](https://github.com/harveytriana/CosmosDBMock/blob/master/cdb_3.png)
 
-### Otros Detalles
+### Other Details
 
-* Muestro una práctica correcta para implementar los datos de conexión a Cosmos desde Settings, tanto  para Azure como para el Emulador.
+* Shows a correct practice to implement the connection data to Cosmos from Settings, both for Azure and for the Emulator.
 
-#### appsettings.json (fragmento)
+#### appsettings.json (fragment)
 ```json
 {
   "Logging": {
@@ -64,13 +65,19 @@ Esta imagen muestra un **GET** en Swagger:
 }
 ```
 
-* Muestro una forma eficiente para manejar un archivo estático desde .NET Core, con ruta global. Se usó para la semilla de datos al crear la base de daos de ejemplo.
+* Shows an efficient way to handle a static file from .NET Core, with global path. It was used for the data seed when creating the sample database.
 
-* Se resuelve de manera lógica las complejidades que maneja Cosmos en la clase **CosmosService<T>** 
+
 ___
 Luis Harvey Triana Vega
-  
-harveytriana@gmail.com
+___
+Twitter ```@__harveyt__```
+
+License
+----
+
+MIT
+
 
 
 
