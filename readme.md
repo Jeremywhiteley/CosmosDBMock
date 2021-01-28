@@ -1,5 +1,4 @@
-# Cosmos DB Generic Sample, NET 5.0
-_An API Rest from .NET Core_
+# Cosmos DB Generic API Sample, NET 5.0
 
 Cosmos DB is a globally distributed, scale-out database service running on the MS Azure cloud. It presents highly optimized performance potentials.
 
