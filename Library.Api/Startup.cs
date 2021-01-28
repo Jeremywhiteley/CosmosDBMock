@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using System;
 
 namespace LibraryApi
 {
@@ -18,6 +19,8 @@ namespace LibraryApi
         public IConfiguration Configuration { get; }
 
         public static string PATH { get; private set; }
+
+        public static bool ServiceReady { get; set; } = true;
 
         public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
@@ -36,10 +39,14 @@ namespace LibraryApi
             // set the Emulator or Azure account
             var cosmosDBSettings = Configuration.GetSection("CosmosDbEmulator").Get<CosmosSettings>();
 
-
             // cosmos db services
-            services.AddSingleton<ICosmosService<Book>>(DatabaseInitializer.Initialize<Book>(cosmosDBSettings).GetAwaiter().GetResult());
-            services.AddSingleton<ICosmosService<Student>>(DatabaseInitializer.Initialize<Student>(cosmosDBSettings).GetAwaiter().GetResult());
+            try {
+                services.AddSingleton<ICosmosService<Book>>(DatabaseInitializer.Initialize<Book>(cosmosDBSettings).GetAwaiter().GetResult());
+                services.AddSingleton<ICosmosService<Student>>(DatabaseInitializer.Initialize<Student>(cosmosDBSettings).GetAwaiter().GetResult());
+            }
+            catch {
+                Console.WriteLine($"Fatal Exception: Cosmos DB service is not ready");
+            }
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
