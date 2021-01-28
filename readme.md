@@ -66,13 +66,12 @@ This image shows a GET in Swagger:
 ```
 
 * Shows an efficient way to handle a static file from .NET Core, with global path. It was used for the data seed when creating the sample database.
-
-> :warning: **Before running this application**: Remember that you has to have a Cosmos DB service. The logical and simpler recommendation is to use the Cosmos DB emulator.
-
 ___
+> :warning: **Before running this application**: Remember that you has to have a Cosmos DB service. The logical and simpler recommendation is to use the Cosmos DB emulator.
+___
+
 Luis Harvey Triana Vega
 Twitter ```@__harveyt__```
-
 
 License
 ----
